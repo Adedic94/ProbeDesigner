@@ -1,0 +1,41 @@
+group 'nl.bioinf.adedic.Probedesigner'
+version '1.0-SNAPSHOT'
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile('commons-cli:commons-cli:1.4')
+}
+jar {
+    description 'creates executable jar without dependencies'
+    baseName = 'Probedesigner-jar'
+    manifest {
+        attributes 'Main-Class': "nl.bioinf.adedic.Probedesigner.model.Main",
+                "Class-Path": configurations.compile.collect { "lib/" + it.getName() }.join(' ')
+    }
+}
+// create a single Jar with all dependencies
+// see https://www.mkyong.com/gradle/gradle-create-a-jar-file-with-dependencies/
+task fatJar(type: Jar) {
+    group 'build'
+    description 'fat jar building with dependencies'
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': version,
+                'Main-Class': "nl.bioinf.adedic.Probedesigner.model.Main"
+    }
+
+    baseName = 'Probedesigner-Fatjar'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+compileJava{
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}

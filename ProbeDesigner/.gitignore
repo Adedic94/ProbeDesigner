@@ -1,0 +1,22 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Gradle template
+.gradle
+/build/
+/.idea
+/gradle
+gradlew
+gradlew.bat
+CLIdemo.iml
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package Files #
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rard.xml
